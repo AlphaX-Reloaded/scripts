@@ -21,9 +21,9 @@ MAGENTA=$ESC_SEQ"35;01m"
 CYAN=$ESC_SEQ"36;01m"
 
 function spinner {
- 	local pid=$!
- 	local delay=0.75
- 	local spinstr='|/-\'
+	local pid=$!
+	local delay=0.75
+	local spinstr="/-\|"
 
  	while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 
@@ -34,6 +34,18 @@ function spinner {
  	printf "\b\b\b\b\b\b"
  	done
  	printf "    \b\b\b\b"
+}
+
+function spinner2 {
+    sleep 7 &
+    PID=$!
+    i=1
+    sp="/-\|"
+    echo -n ' '
+    while [ -d /proc/$PID ]
+    do
+        printf "\b${sp:i++%${#sp}:1}"
+    done
 }
 
 function hide_output {
